@@ -29,19 +29,17 @@ public class Main {
                     if (localAtual == null) {
                         definirLocalInicial();
                     } else {
-                        viajar(); // Viagem Adjacente
+                        viajar(); 
                     }
                     break;
                 case 2:
                     verDestinosImediatos();
                     break;
                 case 3:
-                    // A Opção 3 agora é o "Scanner"
                     escanearRotasDeLongoAlcance();
                     break;
                 case 4:
-                    // --- NOVA OPÇÃO ---
-                    ligarPilotoAutomatico(); // Viagem Longa
+                    ligarPilotoAutomatico();
                     break;
                 case 5:
                     adicionarLocal();
@@ -96,8 +94,8 @@ public class Main {
         }
         
         System.out.println("2. Ver Destinos Imediatos");
-        System.out.println("3. Escanear Rotas (Planejar)"); // Opção 3 (Scanner)
-        System.out.println("4. Ligar Piloto Automático (Viagem Longa)"); // NOVA Opção 4
+        System.out.println("3. Escanear Rotas (Planejar)");
+        System.out.println("4. Ligar Piloto Automático (Viagem Longa)");
         System.out.println("5. (Manutenção) Adicionar Novo Local");
         System.out.println("6. (Manutenção) Adicionar Nova Rota");
         System.out.println("7. Listar Todos os Locais Conhecidos");
@@ -121,17 +119,16 @@ public class Main {
         System.out.print("Digite o nome exato do seu local de origem: ");
         String nomeLocal = scanner.nextLine();
         
-        Local loc = mapa.getLocal(nomeLocal);
-        
-        if (loc == null) {
+        Local local = mapa.getLocal(nomeLocal);
+
+        if (local == null) {
             System.out.println("Erro: Local '" + nomeLocal + "' não encontrado.");
         } else {
-            localAtual = loc; 
+            localAtual = local; 
             System.out.println("Localização inicial definida para: " + localAtual.getNome());
         }
     }
 
-    // OPÇÃO 1: Viagem de um "pulo"
     private static void viajar() {
         System.out.println("Escolha seu próximo destino:");
         List<Local> destinosPossiveis = mapa.verDestinosPossiveis(localAtual.getNome());
@@ -158,13 +155,12 @@ public class Main {
         }
         
         Local novoDestino = destinosPossiveis.get(escolha - 1);
-        localAtual = novoDestino; // ATUALIZA O LOCAL ATUAL
+        localAtual = novoDestino;
         
         System.out.println("Viajando...");
         System.out.println("Você chegou em: " + localAtual.getNome());
     }
 
-    // OPÇÃO 2: Ver adjacentes
     private static void verDestinosImediatos() {
         if (localAtual == null) {
             System.out.println("Erro: Você precisa definir seu local inicial primeiro (Opção 1).");
@@ -183,7 +179,6 @@ public class Main {
         }
     }
 
-    // OPÇÃO 3: Scanner de longo alcance
     private static void escanearRotasDeLongoAlcance() {
         if (localAtual == null) {
             System.out.println("Erro: Você precisa definir seu local inicial primeiro (Opção 1).");
@@ -224,7 +219,6 @@ public class Main {
         }
     }
 
-    // --- OPÇÃO 4 ATUALIZADA (Piloto Automático com simulação) ---
     private static void ligarPilotoAutomatico() {
         if (localAtual == null) {
             System.out.println("Erro: Você precisa definir seu local inicial primeiro (Opção 1).");
@@ -239,7 +233,6 @@ public class Main {
             return;
         }
 
-        // 1. Encontra a rota MAIS RÁPIDA
         Map.Entry<List<Local>, Double> rota = mapa.encontrarRotaMaisRapida(localAtual.getNome(), rotaDestino);
 
         if (rota == null) {
@@ -247,7 +240,6 @@ public class Main {
             return;
         }
 
-        // 2. Mostra a rota e pede confirmação
         System.out.println("Rota mais rápida encontrada:");
         System.out.println(formatarRota(rota));
         System.out.print("\nDeseja iniciar a viagem? (s/n): ");
@@ -255,47 +247,36 @@ public class Main {
         String confirmacao = scanner.nextLine();
         
         if (confirmacao.equalsIgnoreCase("s")) {
-            // 3. Executa a viagem SIMULADA
             List<Local> caminho = rota.getKey();
             
             System.out.println("\nPiloto automático ativado...");
             
-            // --- INÍCIO DA SIMULAÇÃO DE VIAGEM ---
+
             try {
-                // Começa do índice 1, porque o índice 0 é onde já estamos
                 for (int i = 1; i < caminho.size(); i++) {
                     Local proximaParada = caminho.get(i);
                     
                     System.out.println("Viajando para " + proximaParada.getNome() + "...");
                     
-                    // Pausa de 1.5 segundos para simular a viagem
                     Thread.sleep(1500); 
                     
-                    // ATUALIZA O LOCAL ATUAL passo a passo
                     localAtual = proximaParada; 
                     
                     System.out.println("...Salto concluído. Você chegou em: " + localAtual.getNome());
                 }
                 
-                // Pausa final
                 Thread.sleep(500);
                 System.out.println("\nViagem concluída! Destino final (" + localAtual.getNome() + ") alcançado.");
 
             } catch (InterruptedException e) {
-                // Trata o erro se o 'sleep' for interrompido
                 System.out.println("Alerta! O piloto automático foi interrompido!");
-                Thread.currentThread().interrupt(); // Restaura o status de interrupção
+                Thread.currentThread().interrupt();
             }
-            // --- FIM DA SIMULAÇÃO ---
-
         } else {
             System.out.println("Viagem cancelada.");
         }
     }
     
-    /**
-     * Método auxiliar para formatar a rota
-     */
     private static String formatarRota(Map.Entry<List<Local>, Double> rota) {
         double custo = rota.getValue();
         List<Local> caminho = rota.getKey();
@@ -306,8 +287,6 @@ public class Main {
         }
         return String.format("(Custo: %.1f) %s", custo, sj.toString());
     }
-
-    // --- Opções de Manutenção ---
 
     private static void adicionarLocal() {
         System.out.print("Digite o nome do novo local: ");
@@ -378,9 +357,9 @@ public class Main {
         mapa.adicionarRotaMaoDupla("Terra", "Marte", 4.0);
         mapa.adicionarRotaMaoDupla("Terra", "Venus", 3.0);
         mapa.adicionarRotaMaoDupla("Venus", "Mercurio", 2.0);
-        mapa.adicionarRotaMaoDupla("Marte", "Cinturão de Asteroides", 2.0);
+        mapa.adicionarRotaMaoDupla("Marte", "Cinturao de Asteroides", 2.0);
         mapa.adicionarRotaMaoDupla("Marte", "Ponto de Salto (Hiperespaço)", 10.0);
-        mapa.adicionarRotaMaoDupla("Cinturão de Asteroides", "Jupiter", 8.0);
+        mapa.adicionarRotaMaoDupla("Cinturao de Asteroides", "Jupiter", 8.0);
         mapa.adicionarRotaMaoDupla("Jupiter", "Saturno", 10.0);
         mapa.adicionarRotaMaoDupla("Ponto de Salto (Hiperespaço)", "Alpha Centauri", 5.0);
         mapa.adicionarRotaMaoDupla("Ponto de Salto (Hiperespaço)", "Sirius", 8.0);

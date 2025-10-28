@@ -1,7 +1,6 @@
 package com.example;
 
 import java.util.*;
-// Importações necessárias para o "Par" (Caminho, Custo)
 import java.util.AbstractMap;
 import java.util.Map;
 
@@ -11,8 +10,7 @@ public class MapaGalaxia {
     public MapaGalaxia() {
         this.locais = new HashMap<>();
     }
-
-    // --- Métodos de Manutenção do Grafo ---
+    
     public void adicionarLocal(String nome) {
         if (!locais.containsKey(nome)) {
             locais.put(nome, new Local(nome));
