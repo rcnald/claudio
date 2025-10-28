@@ -10,7 +10,7 @@ public class MapaGalaxia {
     public MapaGalaxia() {
         this.locais = new HashMap<>();
     }
-    
+
     public void adicionarLocal(String nome) {
         if (!locais.containsKey(nome)) {
             locais.put(nome, new Local(nome));
@@ -30,7 +30,6 @@ public class MapaGalaxia {
         adicionarRota(nomeB, nomeA, peso);
     }
     
-    // --- Métodos de Consulta ---
     public Local getLocal(String nome) {
         return locais.get(nome);
     }

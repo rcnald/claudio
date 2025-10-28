@@ -1,10 +1,9 @@
 package com.example;
 
-// Nossa "Aresta" Ponderada
 public class Rota {
     private Local origem;
     private Local destino;
-    private double peso; // Custo (tempo, combustível, etc.)
+    private double peso;
 
     public Rota(Local origem, Local destino, double peso) {
         this.origem = origem;
@@ -12,7 +11,6 @@ public class Rota {
         this.peso = peso;
     }
 
-    // Getters
     public Local getOrigem() {
         return origem;
     }
