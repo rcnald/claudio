@@ -49,12 +49,6 @@ public class MapaGalaxia {
         return destinos;
     }
 
-    
-    // --- MÉTODO PARA OPÇÃO 3 (SCANNER) ---
-    /**
-     * Calcula o custo da rota mais rápida da origem para TODOS os outros locais.
-     * Retorna um Map<Destino, Custo>.
-     */
     public Map<Local, Double> calcularTodasRotasPossiveis(String nomeOrigem) {
         Local origem = getLocal(nomeOrigem);
         Map<Local, Double> distancias = new HashMap<>();
@@ -89,11 +83,6 @@ public class MapaGalaxia {
         return distancias;
     }
 
-    // --- NOVO MÉTODO (NA VERDADE, ANTIGO) PARA OPÇÃO 4 (PILOTO AUTOMÁTICO) ---
-    /**
-     * Calcula a rota mais rápida da origem para UM destino específico.
-     * Retorna um "Par" (Map.Entry) contendo o Caminho (List<Local>) e o Custo (Double).
-     */
     public Map.Entry<List<Local>, Double> encontrarRotaMaisRapida(String nomeOrigem, String nomeDestino) {
         Local origem = getLocal(nomeOrigem);
         Local destino = getLocal(nomeDestino);
@@ -116,10 +105,9 @@ public class MapaGalaxia {
         while (!fila.isEmpty()) {
             Local localAtual = fila.poll();
             
-            // Achamos o destino
             if (localAtual.equals(destino)) {
                 List<Local> caminho = reconstruirCaminho(predecessores, origem, destino);
-                if (caminho == null) return null; // Não deveria acontecer
+                if (caminho == null) return null;
                 
                 double custoTotal = distancias.get(destino);
                 return new AbstractMap.SimpleEntry<>(caminho, custoTotal);
@@ -139,7 +127,7 @@ public class MapaGalaxia {
                 }
             }
         }
-        return null; // Não achou caminho
+        return null;
     }
     
     // Método auxiliar para o 'encontrarRotaMaisRapida'
