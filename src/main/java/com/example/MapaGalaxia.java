@@ -130,7 +130,6 @@ public class MapaGalaxia {
         return null;
     }
     
-    // Método auxiliar para o 'encontrarRotaMaisRapida'
     private List<Local> reconstruirCaminho(Map<Local, Local> predecessores, Local origem, Local destino) {
         List<Local> caminho = new ArrayList<>();
         Local passoAtual = destino;
@@ -140,7 +139,6 @@ public class MapaGalaxia {
         }
         Collections.reverse(caminho);
         
-        // Garante que o caminho começa na origem (se houver caminho)
         if (caminho.isEmpty() || !caminho.get(0).equals(origem)) {
             return null;
         }
